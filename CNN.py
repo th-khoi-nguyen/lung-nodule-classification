@@ -43,11 +43,9 @@ model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=[
 History = model.fit_generator(datagen.flow(x_train,y_train, batch_size=128),
                               epochs = 100, validation_data = (x_test,y_test),
                               verbose = 1, steps_per_epoch=x_train.shape[0] // batch_size)
-# display the accuracy
-plt.plot(History.history['accuracy'])
-plt.plot(History.history['val_accuracy'])
-plt.title('Model Accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epochs')
-plt.legend(['train', 'test'])
-plt.show()
+
+# test the model performance on testing set
+test_eval = model.evaluate(x_test, y_test, verbose=0)
+
+print('Test loss:', test_eval[0])
+print('Test accuracy:', test_eval[1])
